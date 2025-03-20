@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ReservationsService } from './reservations.service';
 import { ReservationsController } from './reservations.controller';
-import { DatabaseModule } from '@app/shared';
+import { DatabaseModule, LoggerModule } from '@app/shared';
 import { ConfigModule } from '@nestjs/config';
 import { ReservationsRepository } from './reservations.repository';
 import {
@@ -11,6 +11,7 @@ import {
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     DatabaseModule,
     DatabaseModule.forFeature([
       {
@@ -18,7 +19,7 @@ import {
         schema: ReservationSchema,
       },
     ]),
-    ConfigModule.forRoot(),
+    LoggerModule,
   ],
   controllers: [ReservationsController],
   providers: [ReservationsService, ReservationsRepository],
