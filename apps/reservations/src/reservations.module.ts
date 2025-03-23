@@ -8,10 +8,17 @@ import {
   ReservationDocument,
   ReservationSchema,
 } from './models/reservation.schema';
+import * as Joi from 'joi';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validationSchema: Joi.object({
+        MONGODB_URI: Joi.string().required(),
+        PORT: Joi.number().required(),
+      }),
+    }),
     DatabaseModule,
     DatabaseModule.forFeature([
       {
